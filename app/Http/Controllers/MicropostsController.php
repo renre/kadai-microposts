@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class MicropostsController extends Controller
 {
         
-       public function index()
+      public function index()
     {
         $data = [];
         if (\Auth::check()) {
@@ -18,10 +18,13 @@ class MicropostsController extends Controller
                 'user' => $user,
                 'microposts' => $microposts,
             ];
+            $data += $this->counts($user);
+            return view('users.show', $data);
+        }else {
+            return view('welcome',$data);
         }
-        return view('welcome', $data);
     }
-    
+
         public function store(Request $request)
     {
         $this->validate($request, [
